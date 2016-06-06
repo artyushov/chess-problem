@@ -5,7 +5,6 @@ import me.artyushov.chess.model.BoardSquare;
 import me.artyushov.chess.model.PieceType;
 import me.artyushov.chess.model.PiecesPositions;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,7 +17,7 @@ public class BoardState {
     private final int columnCount;
 
     private final PiecesPositions positions;
-    private final Set<BoardSquare> occupiedSquares = new HashSet<>();
+
     private final GameLogic gameLogic;
 
     public BoardState(int rowCount, int columnCount) {
@@ -29,17 +28,13 @@ public class BoardState {
     }
 
     public Set<BoardSquare> getAvailablePositionsFor(PieceType piece) {
-        return gameLogic.getAvailableSquares(piece, occupiedSquares);
+        return gameLogic.getAvailableSquares(piece);
     }
 
     public void putPiece(PieceType pieceType, BoardSquare destination) {
         rangeCheck(destination);
-        if (occupiedSquares.contains(destination)) {
-            throw new IllegalStateException("Specified square is already occupied: " + destination);
-        }
 
         gameLogic.putPiece(pieceType, destination);
-        occupiedSquares.add(destination);
         positions.putPiece(pieceType, destination);
     }
 
@@ -51,7 +46,6 @@ public class BoardState {
             throw new IllegalStateException("Specified square is already empty: " + fromSquare);
         }
 
-        occupiedSquares.remove(fromSquare);
         gameLogic.removePiece(piece, fromSquare);
     }
 

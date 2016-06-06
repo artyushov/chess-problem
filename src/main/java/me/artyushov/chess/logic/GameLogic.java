@@ -20,6 +20,7 @@ public class GameLogic {
 
     private final int[][] attackersCount;
     private final Set<BoardSquare> freeSquares;
+    private final Set<BoardSquare> occupiedSquares = new HashSet<>();
 
     public GameLogic(int rowCount, int columnCount) {
         this.rowCount = rowCount;
@@ -40,6 +41,7 @@ public class GameLogic {
         });
 
         freeSquares.remove(destination);
+        occupiedSquares.add(destination);
         attackersCount[destination.getRow() - 1][destination.getColumn() - 1] = 1;
     }
 
@@ -52,10 +54,11 @@ public class GameLogic {
             }
         });
         attackersCount[fromSquare.getRow() - 1][fromSquare.getColumn() - 1] = 0;
+        occupiedSquares.remove(fromSquare);
         freeSquares.add(fromSquare);
     }
 
-    public Set<BoardSquare> getAvailableSquares(PieceType piece, Set<BoardSquare> occupiedSquares) {
+    public Set<BoardSquare> getAvailableSquares(PieceType piece) {
         return freeSquares.stream()
                 .filter(freeSquare -> !containsAny(rules.getAttackedSquares(piece, freeSquare), occupiedSquares))
                 .collect(toSet());
