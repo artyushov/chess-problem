@@ -3,10 +3,21 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar.archiveName = 'chessProblem.jar'
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.artyushov.chess.Main'
+    }
 }
