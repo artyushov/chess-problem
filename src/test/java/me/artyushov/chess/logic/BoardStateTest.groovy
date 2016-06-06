@@ -1,7 +1,8 @@
-package me.artyushov.chess.model
+package me.artyushov.chess.logic
 
+import me.artyushov.chess.model.BoardSquare
+import me.artyushov.chess.model.PieceType
 import spock.lang.Specification
-
 /**
  * Author: artyushov
  * Date: 2016-06-04 20:42
