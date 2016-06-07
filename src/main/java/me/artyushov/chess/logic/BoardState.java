@@ -27,8 +27,16 @@ public class BoardState {
         this.gameLogic = new GameLogic(rowCount, columnCount);
     }
 
-    public Set<BoardSquare> getAvailablePositionsFor(PieceType piece) {
-        return gameLogic.getAvailableSquares(piece);
+    /**
+     * Will returns only those squares that are after specified square.
+     * Will not perform filtering if `after` is null.
+     *
+     * This is useful in order not to process all permutations of the same pieces
+     * which produce the same result.
+     *
+     */
+    public Set<BoardSquare> getAvailablePositionsFor(PieceType piece, BoardSquare after) {
+        return gameLogic.getAvailableSquares(piece, after);
     }
 
     public void putPiece(PieceType pieceType, BoardSquare destination) {
@@ -63,5 +71,4 @@ public class BoardState {
                     + ". Row: " + square.getRow() + "; column: " + square.getColumn());
         }
     }
-
 }

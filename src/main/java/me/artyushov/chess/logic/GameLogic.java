@@ -1,10 +1,12 @@
 package me.artyushov.chess.logic;
 
+import me.artyushov.chess.Util;
 import me.artyushov.chess.model.BoardSquare;
 import me.artyushov.chess.model.PieceType;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -58,9 +60,14 @@ public class GameLogic {
         freeSquares.add(fromSquare);
     }
 
-    public Set<BoardSquare> getAvailableSquares(PieceType piece) {
-        return freeSquares.stream()
-                .filter(freeSquare -> !containsAny(rules.getAttackedSquares(piece, freeSquare), occupiedSquares))
+    public Set<BoardSquare> getAvailableSquares(PieceType piece, BoardSquare after) {
+        Stream<BoardSquare> result = freeSquares.stream()
+                .filter(freeSquare -> !containsAny(rules.getAttackedSquares(piece, freeSquare), occupiedSquares));
+        if (after != null) {
+            int fromIndex = Util.convertSquareToIndex(after, columnCount);
+            result = result.filter(square -> Util.convertSquareToIndex(square, columnCount) > fromIndex);
+        }
+        return result
                 .collect(toSet());
     }
 

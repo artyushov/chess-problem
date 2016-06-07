@@ -3,6 +3,15 @@ package me.artyushov.chess.model;
 import java.util.BitSet;
 
 /**
+ *
+ * This class uses a bitset to keep track of every piece position.
+ * The bitset represents all squares of the board as if we started counting them
+ * from the bottom-left corner to the right, then next row from left to right, etc.
+ *
+ * There are six possible states for a particular square. Either it is free or it is
+ * occupied by 1 of 5 possible piece types. Therefore, the minimum number of bits
+ * used to represent the square's state is 3.
+ *
  * Author: artyushov
  * Date: 2016-06-06 00:01
  */

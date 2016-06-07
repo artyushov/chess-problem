@@ -1,6 +1,6 @@
 package me.artyushov.chess;
 
-import me.artyushov.chess.logic.Solution;
+import me.artyushov.chess.logic.Solver;
 import me.artyushov.chess.model.BoardSnapshot;
 import me.artyushov.chess.model.PieceType;
 import me.artyushov.chess.model.Problem;
@@ -25,13 +25,16 @@ public class Main {
     public static final int PARAMETERS_COUNT = 7;
 
     public static void main(String[] args) {
+
         Problem problem = parseArgs(args);
+
         if (problem == null) {
             System.err.println("Couldn't parse arguments.");
             printHelp();
         } else {
+
             long start = System.currentTimeMillis();
-            Set<BoardSnapshot> solutions = Solution.solve(problem);
+            Set<BoardSnapshot> solutions = Solver.solve(problem);
             long elapsedTime = System.currentTimeMillis() - start;
 
             System.err.println("Found " + solutions.size() + " solutions in " + elapsedTime + " milliseconds.");
@@ -69,7 +72,7 @@ public class Main {
 
     private static void printHelp() {
         System.err.println("Usage:");
-        System.err.println("java -jar chessProblem.jar rows columns " + createPieceCountParams() + "[output_file]");
+        System.err.println("java -jar chessProblem.jar rows columns " + createPieceCountParams() + " [output_file]");
     }
 
     private static String createPieceCountParams() {
